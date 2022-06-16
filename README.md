@@ -75,15 +75,15 @@ The author specifically disclaims all implied warranties of any kind or nature, 
 3. Call qmake referencing the .pro file
 4. Call make
 
-eg
+eg:
 
-`mkdir build
+`mkdir build`
 
-cd build
+`cd build`
 
-qmake ../NordVPN-GUI.pro
+`qmake ../NordVPN-GUI.pro`
 
-make`
+`make`
 
 ## Use Qt Creator
 
