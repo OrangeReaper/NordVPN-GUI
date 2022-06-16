@@ -4,7 +4,7 @@ GUI for Linux NordVPN App
 
 ![](screenshots/Control_Panel_Screenshot.png)
 
-This software has been written and tested using Ubuntu. It is provided with No Guarantees or Warranties of any kind, expressed or implied. All versions should be considered as being in Perpetual beta.
+This software has been written in C++ and the Qt framework and Qt Creator, it has been tested using Ubuntu. It is provided with No Guarantees or Warranties of any kind, expressed or implied. All versions should be considered as being in Perpetual beta.
 
 The author specifically disclaims all implied warranties of any kind or nature, including any implied warranty of merchantability and/or any implied warranty of fitness for a particular purpose.
 
@@ -65,6 +65,35 @@ The author specifically disclaims all implied warranties of any kind or nature, 
 - countries
 - version
 - account
+
+# Build
+
+## Using qmake/make
+
+1. Create the build output directory
+2. CD to the build output directory 
+3. Call qmake referencing the .pro file
+4. Call make
+
+eg
+
+`mkdir build
+
+cd build
+
+qmake ../NordVPN-GUI.pro
+
+make`
+
+## Use Qt Creator
+
+Load the project and compile
+
+# Install
+
+deb file is included and this should be installable on Ubuntu/Debian based using the command:
+
+`dpkg -i nordvpn-gui_0.112.0-1.deb`   
 
 # Licence
 
