@@ -1,0 +1,16 @@
+{
+  "settings":{
+    "iconSize":"50",
+    "geometry":"@ByteArray(\x1\xd9\xd0\xcb\0\x2\0\0\0\0\0\x80\0\0\0]\0\0\0\xc3\0\0\0\xa0\0\0\0\x80\0\0\0]\0\0\0\xc3\0\0\0\xa0\0\0\0\0\0\0\0\0\n\0)",
+    "windowState":"@ByteArray(\0\0\0\xff\0\0\0\0\xfd\0\0\0\0\0\0\0\x44\0\0\0\x44\0\0\0\x4\0\0\0\x4\0\0\0\b\0\0\0\b\xfc\0\0\0\0)",
+    "username":"Required",
+    "password":"Required",
+    "connectionType":"Country",
+    "country":"Netherlands",
+    "group":"Europe",
+    "dns":"103.86.96.100,103.86.99.100",
+    "subnets":"",
+    "ports":"",
+    "controlPanelGeometry":"@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\x3\xff\0\0\x1\xe3\0\0\x6s\0\0\x4\x15\0\0\x3\xff\0\0\x2\b\0\0\x6s\0\0\x4\x15\0\0\0\0\0\0\0\0\n\0\0\0\x3\xff\0\0\x2\b\0\0\x6s\0\0\x4\x15)"
+  }
+}

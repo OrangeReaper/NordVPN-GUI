@@ -1,0 +1,41 @@
+This release provides the following features:
+  Detect if nordvpn app is installed
+  Desktop icon which appears topmost and provides:
+    : Ability to be relocated as desired by dragging with mouse.
+    : Position is retained on application closure
+    : Right click menu options:
+      : Connect/Disconnect to VPN
+      : Open Control Panel
+      : Quit
+  Control Panel which provides:
+    : The means to enter Username & Password
+    : Connection status information
+    : Ability to Login/out from NordVPN
+    : Display of Version of nordvpn App and NordVPN-GUI App
+    : Ability to control VPN Connection
+      : Any
+      : By Group
+      : By Country
+    : Account expiry information
+    : Display and Control/Manage of the following settings:
+      : Technology
+      : Protocol
+      : Firewall
+      : Kill Switch
+      : Cybersec
+      : Obfuscate
+      : Notify
+      : Autoconnect
+      : IPv6
+      : DNS
+      : Whitelists (subnets/ports)
+supported nordvpn app commands
+  : status
+  : settings
+  : connect
+  : disconnect
+  : login
+  : countries
+  : whitelist
+  : version
+  : account

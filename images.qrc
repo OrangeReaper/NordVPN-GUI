@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/r">
+        <file>images/NordVPN-GUI.png</file>
+        <file>images/mytab.png</file>
+        <file>images/insecure.png</file>
+        <file>images/secure.png</file>
+    </qresource>
+</RCC>

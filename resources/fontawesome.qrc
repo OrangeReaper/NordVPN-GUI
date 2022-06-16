@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/r">
+        <file>fontawesome-free-6.0.0-desktop/otfs/Font Awesome 6 Free-Regular-400.otf</file>
+        <file>fontawesome-free-6.0.0-desktop/svgs/solid/square-plus.svg</file>
+        <file>fontawesome-free-6.0.0-desktop/svgs/solid/arrow-right-to-bracket.svg</file>
+    </qresource>
+</RCC>

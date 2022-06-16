@@ -1,0 +1,15 @@
+Todo:
+    - Advanced settings:
+        - command timeouts to be configurable
+        - status poll rate to be configurable
+    - Do not log account information            
+
+Bugs:
+    - None Identified
+
+There are currently no Plans to include the following commands:
+    - help   
+    - register
+    - meshnet
+    - cities
+    - rate

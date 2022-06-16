@@ -1,0 +1,33 @@
+16-Jun-2022 v0.112.x
+  : added managements VPN Connection by type
+01-Jun-2022 v0.111.x
+  : added managements of whitelists (Ports and Subnets)
+26-Mar-2022 v0.110.x
+  : added management of DNS Settings
+07-Mar-2022 v0.109.x
+  : added control of settings currently displayed (except DNS and Whitelists)
+05-Mar-2022 V0.108.x
+  : Display of Technology, Protocol, Firewall, Kill Switch, Cybersec, Obfuscate, Notify, Autoconnect, IPv6, DNS settings
+03-Mar-2022 v0.107.x
+  : Detect if nordvpn app is installed
+02-Mar-2022 v0.106.x
+  : Add Pulldown display of command history
+27-Feb-2022 v0.105.x
+  : Added message box which is displayed on command timeout
+  : Added account command; account expiry info displayed on Control Panel
+24-Feb-2022 v0.104.x
+  : Added Control of VPN Connection to Control Panel
+24-Feb-2022 v0.103.x
+  : Added version command
+  : Version of nordvpn app and NordVPN-GUI app displayed on control panel
+23-Feb-2022 v0.102.x
+  : Added ability to logout from NordVPN
+19-Feb-2022 v0.101.x
+  : Added polling of status to ensure everything shows the latest status
+  : Added countries command; change country from picklist (Reconnect if already connected)
+  : Resize of control panel is remembered between sessions
+18-Feb-2022 v0.100.x
+  : Initial Issue
+
+
+
