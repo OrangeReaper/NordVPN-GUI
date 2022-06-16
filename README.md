@@ -2,7 +2,7 @@
 
 GUI for Linux NordVPN App
 
-![](/home/andy/QtApps/NordVPN-GUI/screenshots/Control_Panel_Screenshot.png)
+![](screenshots/Control_Panel_Screenshot.png)
 
 This software has been written and tested using Ubuntu. It is provided with No Guarantees or Warranties of any kind, expressed or implied. All versions should be considered as being in Perpetual beta.
 
