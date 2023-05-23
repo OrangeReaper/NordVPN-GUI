@@ -16,6 +16,7 @@ signals:
     void    updateTechnology(QString technology);
     void    updateProtocol(QString protocol);
     void    updateServer(QString connectedServer);
+    void    updateUptime(QString uptime);
     void    isConnected();     //Status: Connected
     void    isDisconnected();  //Status: Disconnected
 private:

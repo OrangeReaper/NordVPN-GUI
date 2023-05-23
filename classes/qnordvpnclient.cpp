@@ -160,6 +160,7 @@ void QNordVPNClient::disconnectFromVPN(QCallback *callback){
     m_taskQueue->enqueue(vpnCommand);
     getStatus(new QCallback(this));
 }
+
 //*
 //exit
 void QNordVPNClient::exitVPN(QCallback *callback){
@@ -245,6 +246,7 @@ void QNordVPNClient::getStatus(QCallback *callback){
     connect(vpnCommand, SIGNAL(updateTechnology(QString)), this, SLOT(setActualTechnology(QString)));
     connect(vpnCommand, SIGNAL(updateProtocol(QString)), this, SLOT(setActualProtocol(QString)));
     connect(vpnCommand, SIGNAL(updateServer(QString)), this, SLOT(setConnectedServer(QString)));
+    connect(vpnCommand, SIGNAL(updateUptime(QString)), this, SLOT(setUptime(QString)));
     connect(vpnCommand, SIGNAL(isConnected()), this, SLOT(connectedOK()));
     m_taskQueue->enqueue(vpnCommand);
 }
@@ -377,6 +379,9 @@ void QNordVPNClient::setActualProtocol(QString protocol) {
 }
 void QNordVPNClient::setConnectedServer(QString connectedServer) {
     emit updateConnectedServer(connectedServer);
+}
+void QNordVPNClient::setUptime(QString uptime) {
+    emit updateUptime(uptime);
 }
 void QNordVPNClient::setCountries(QStringList countries) {
     emit updateCountries(countries);

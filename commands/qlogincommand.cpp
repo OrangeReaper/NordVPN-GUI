@@ -7,10 +7,14 @@ QLoginCommand::QLoginCommand(QCallback *callback, QObject *parent) : QVPNCommand
 }
 void QLoginCommand::execute(QProcess *vpnProcess){
     QSettings settings;
-    QString command = "nordvpn login --legacy --username "
+/*    QString command = "nordvpn login --legacy --username "
                 + settings.value("username").toString()
                 + " --password "
-                + settings.value("password").toString();
+                + settings.value("password").toString(); */
+
+
+    QString command = "nordvpn login --token "
+            + settings.value("password").toString();
     sendCommand(vpnProcess, command, 10000);
 }
 void QLoginCommand::handleResponse(){

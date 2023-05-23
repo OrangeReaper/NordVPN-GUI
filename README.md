@@ -20,8 +20,9 @@ The author specifically disclaims all implied warranties of any kind or nature, 
 
 **Icon which appears topmost on the desktop and provides:**
 
-- Indication of VPN Connectivity
-- Ability to be relocated as desired by dragging with mouse.
+- Indication of VPN Connectivity & uptime
+- Ability to be relocated as desired by dragging with mouse
+- Login via NordVPN Token
 - Position is retained on application closure
 - Right click menu options-
   * Connect/Disconnect to VPN
@@ -30,8 +31,8 @@ The author specifically disclaims all implied warranties of any kind or nature, 
 
 **Control Panel which provides**
 
-- The means to enter Username & Password
-- Connection status information
+- The means to enter NordVPN token
+- Connection status information including uptime
 - Ability to Login/out from NordVPN
 - Display of Version of NordVPN App and NordVPN-GUI App
 - Ability to control VPN Connection

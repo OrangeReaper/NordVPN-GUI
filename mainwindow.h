@@ -46,6 +46,7 @@ private:
     QAction *a_enable;
     QAction *a_controlPanel;
     QAction *a_quit;
+    QAction *a_disQuit;
 
     QNordVPNClient *m_nordVPNClient=0;
     QLogger *m_logger=0;

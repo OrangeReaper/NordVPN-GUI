@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QHBoxLayout>
 
-const QString MainWindow::s_version = QString("v0.112.0");
+const QString MainWindow::s_version = QString("v0.113.1");
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -58,6 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_nordVPNClient, SIGNAL(updateActualTechnology(QString&)), m_controlPanel, SLOT(setActualTechnology(QString&)));
     connect(m_nordVPNClient, SIGNAL(updateActualProtocol(QString&)), m_controlPanel, SLOT(setActualProtocol(QString&)));
     connect(m_nordVPNClient, SIGNAL(updateConnectedServer(QString&)), m_controlPanel, SLOT(setActualServer(QString&)));
+    connect(m_nordVPNClient, SIGNAL(updateUptime(QString&)), m_controlPanel, SLOT(setUptime(QString&)));
     connect(m_nordVPNClient, SIGNAL(updateStatus(QString&)), m_controlPanel, SLOT(setActualStatus(QString&)));
     connect(m_nordVPNClient, SIGNAL(updateCountries(QStringList&)), m_controlPanel, SLOT(setCountries(QStringList&)));
     connect(m_nordVPNClient, SIGNAL(updateGroups(QStringList&)), m_controlPanel, SLOT(setGroups(QStringList&)));
@@ -89,6 +90,10 @@ MainWindow::MainWindow(QWidget *parent)
     a_disable = new QAction("Disconnect", this);
     connect(a_disable, SIGNAL(triggered()), m_controlPanel, SLOT(cmdDisconnect()));
     pgmImage->menu()->addAction(a_disable);
+
+    a_disQuit = new QAction("Disconnect && Quit", this);
+    connect(a_disQuit, SIGNAL(triggered()), m_controlPanel, SLOT(cmdDisQuit()));
+    pgmImage->menu()->addAction(a_disQuit);
 
     a_quit = new QAction("Quit", this);
     connect(a_quit, SIGNAL(triggered()), this, SLOT(userClose()));
@@ -146,9 +151,11 @@ void MainWindow::VPNChangedState(int state){
     if (state == QNordVPNClient::Connected){
         pgmImage->loadImage(":/r/images/secure.png");
         a_enable->setVisible(false);
+        a_disQuit->setVisible(true);
     } else {
         pgmImage->loadImage(":/r/images/insecure.png");
         a_enable->setVisible(true);
+        a_disQuit->setVisible(false);
     }
     a_disable->setVisible(!a_enable->isVisible());
 }

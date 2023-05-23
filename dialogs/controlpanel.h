@@ -48,6 +48,7 @@ public slots:
     void setActualServer(QString &actualServer);
     void setActualCountry(QString &actualCountry);
     void setActualIP(QString &actualIP);
+    void setUptime(QString &upTime);
     void setActualTechnology(QString &actualTechnology);
     void setActualProtocol(QString &actualProtocol);
     //*
@@ -107,6 +108,7 @@ public slots:
     //Login/Logout commands
     void cmdConnect();
     void cmdDisconnect();
+    void cmdDisQuit();
 private:
     Ui::ControlPanel *ui;
 

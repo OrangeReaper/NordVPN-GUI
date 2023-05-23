@@ -206,9 +206,9 @@ void ControlPanel::showEvent(QShowEvent *showEvent){
 void ControlPanel::resetAccountSettings(){
     // Reset values for username and password from settings
     // and disable buttons until the user changes something
-    ui->username->blockSignals(true);
-    ui->username->setText(m_settings.value("username").toString());
-    ui->username->blockSignals(false);
+//    ui->username->blockSignals(true);
+//    ui->username->setText(m_settings.value("username").toString());
+//    ui->username->blockSignals(false);
 
     m_password->blockSignals(true);
     m_password->setText(m_settings.value("password").toString());
@@ -218,7 +218,7 @@ void ControlPanel::resetAccountSettings(){
     ui->cancelButton->setEnabled(false);
 }
 void ControlPanel::applyNewAccountSettings(){
-    m_settings.setValue("username", ui->username->text());
+//    m_settings.setValue("username", ui->username->text());
     m_settings.setValue("password", m_password->text());
     if (m_nordVPNClient->getVpnState() == QNordVPNClient::vpnState::Dead) {
         cmdLogin();
@@ -228,12 +228,12 @@ void ControlPanel::applyNewAccountSettings(){
 
 void ControlPanel::cmdLogin(){
     QCallback *callback=new QCallback();
-    connect(callback, SIGNAL(callback()), this, SLOT(setLoginState()));
+    connect(callback, SIGNAL(callback(QString)), this, SLOT(setLoginState()));
     m_nordVPNClient->loginToAccount(callback);
 }
 void ControlPanel::cmdLogout(){
     QCallback *callback=new QCallback();
-    connect(callback, SIGNAL(callback()), this, SLOT(setLoginState()));
+    connect(callback, SIGNAL(callback(QString)), this, SLOT(setLoginState()));
     m_nordVPNClient->logoutOfAccount(callback);
 }
 void ControlPanel::cmdConnect(){
@@ -246,6 +246,13 @@ void ControlPanel::cmdDisconnect(){
     m_connectionControl->sliderSwitch()->setOffText("Disconnecting");
     m_connectionControl->sliderSwitch()->setValue(false);
     QCallback *callback=new QCallback();
+    m_nordVPNClient->disconnectFromVPN(callback);
+}
+void ControlPanel::cmdDisQuit(){
+    m_connectionControl->sliderSwitch()->setOffText("Disconnecting");
+    m_connectionControl->sliderSwitch()->setValue(false);
+    QCallback *callback=new QCallback();
+    connect(callback, SIGNAL(callback(QString)), this, SLOT(exitApp()));
     m_nordVPNClient->disconnectFromVPN(callback);
 }
 void ControlPanel::controlConnection(bool connect){
@@ -278,6 +285,9 @@ void ControlPanel::setActualCountry(QString &actualCountry){
 }
 void ControlPanel::setActualIP(QString &actualIP){
     ui->actualIP->setText(actualIP);
+}
+void ControlPanel::setUptime(QString &upTime){
+    ui->uptime->setText("Up Time: " + upTime);
 }
 void ControlPanel::setActualTechnology(QString &actualTechnology){
     ui->actualTechnology->setText(actualTechnology);

@@ -81,6 +81,7 @@ public slots:
     void    setActualTechnology(QString technology);
     void    setActualProtocol(QString protocol);
     void    setConnectedServer(QString connectedServer);
+    void    setUptime(QString uptime);
     void    connectedOK();  //Status: Connected
     //From NordVPN Settings
     void    setTechnology(QString technology);
@@ -112,6 +113,7 @@ signals:
     void    updateActualTechnology(QString &technology);
     void    updateActualProtocol(QString &protocol);
     void    updateConnectedServer(QString &connectedServer);
+    void    updateUptime(QString &uptime);
     void    updateStatus(QString &status);
     //From NordVPN Settings
     void    updateTechnology(QString technology);

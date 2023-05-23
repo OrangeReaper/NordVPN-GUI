@@ -35,32 +35,6 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>80</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Username:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="username"/>
-          </item>
-         </layout>
-        </item>
-        <item>
          <layout class="QHBoxLayout" name="passwordLayout">
           <item>
            <widget class="QLabel" name="label_2">
@@ -77,7 +51,7 @@
              </size>
             </property>
             <property name="text">
-             <string>Password:</string>
+             <string>Token: </string>
             </property>
            </widget>
           </item>
@@ -120,6 +94,28 @@
           </property>
           <property name="text">
            <string>Logged Out</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="uptime">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>13</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+            <italic>true</italic>
+           </font>
+          </property>
+          <property name="text">
+           <string>Uptime: </string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -898,22 +894,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>username</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>ControlPanel</receiver>
-   <slot>enableApply()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>203</x>
-     <y>83</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>284</x>
-     <y>250</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>cancelButton</sender>
    <signal>clicked()</signal>
    <receiver>ControlPanel</receiver>
@@ -922,22 +902,6 @@
     <hint type="sourcelabel">
      <x>417</x>
      <y>135</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>421</x>
-     <y>421</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>username</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>ControlPanel</receiver>
-   <slot>enableCancel()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>327</x>
-     <y>58</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>

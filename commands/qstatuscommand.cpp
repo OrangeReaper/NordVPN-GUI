@@ -36,16 +36,16 @@ void QStatusCommand::handleResponse(){
         if (response().contains("Status: Connected")) {
             emit isConnected();
         }
-        if (response().contains("Current server:")) {
-            emit updateServer(parseResponse("Current server:", response()));
+        if (response().contains("Hostname:")) {
+            emit updateServer(parseResponse("Hostname:", response()));
         }
 
         if (response().contains("Country:")) {
             emit updateCountry(parseResponse("Country:", response()));
         }
 
-        if (response().contains("Server IP:")) {
-            emit updateIPAddress(parseResponse("Server IP:", response()));
+        if (response().contains("IP:")) {
+            emit updateIPAddress(parseResponse("IP:", response()));
         }
 
         if (response().contains("Current technology:")) {
@@ -54,6 +54,10 @@ void QStatusCommand::handleResponse(){
 
         if (response().contains("Current protocol:")) {
             emit updateProtocol(parseResponse("Current protocol:", response()));
+        }
+
+        if (response().contains("Uptime:")) {
+            emit updateUptime(parseResponse("Uptime:", response()));
         }
     }
     QVPNCommand::handleResponse();
