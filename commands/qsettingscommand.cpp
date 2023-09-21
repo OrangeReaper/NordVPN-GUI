@@ -2,12 +2,8 @@
 
 const int QSettingsCommand::s_whitelists = 2;
 
-QSettingsCommand::QSettingsCommand(QCallback *callback, QObject *parent) : QVPNCommand(callback, parent){
-    //setLogging(false);
-}
-void QSettingsCommand::execute(QProcess *vpnProcess){
-    QString command = "nordvpn settings";
-    sendCommand(vpnProcess, command, 5000);
+QSettingsCommand::QSettingsCommand(QCallback *callback, QObject *parent) : QVPNCommand("nordvpn settings", 5000, callback, parent){
+    setLogging(false);
 }
 /*
  * RESPONSE
@@ -84,11 +80,12 @@ QSettingsResult QSettingsCommand::parseBool(QString str){
 void QSettingsCommand::installWhitelist(){
     // scans through responseList() for whitelisted items and saves them to settings
     QVector<int> result(s_whitelists+1);
-    result.fill(responseList().size());
+    QStringList responseList=response().split("\n");
+    result.fill(responseList.size());
     int qtyFound = 0;
-    for (int i = 0; i < responseList().size(); ++i){
-        const QString &string = responseList().at(i);
-        if (string.contains("Whitelisted", Qt::CaseInsensitive))
+    for (int i = 0; i < responseList.size(); ++i){
+        const QString &string = responseList.at(i);
+        if (string.contains("Allowlisted", Qt::CaseInsensitive))
             result[qtyFound++] = i;
     }
 
@@ -96,21 +93,21 @@ void QSettingsCommand::installWhitelist(){
     m_settings.setValue("ports", "");
     if (qtyFound > 0){
         for (int i = 0; i < qtyFound; ++i){
-            addWhitelistSetting(result[i], result[i+1]);
+            addWhitelistSetting(responseList, result[i], result[i+1]);
         }
     }
 }
-void QSettingsCommand::addWhitelistSetting(int from, int to){
+void QSettingsCommand::addWhitelistSetting(QStringList &list, int from, int to){
     QString targetSetting = "subnets";
     QString targetValue = "";
-    if (responseList().at(from).contains("port", Qt::CaseInsensitive)){
+    if (list.at(from).contains("port", Qt::CaseInsensitive)){
         targetSetting = "ports";
     }
     for (int i = from+1; i < to; ++i){
         if (targetValue.length() > 0)
-            targetValue = targetValue + ",";
+            targetValue = targetValue.trimmed() + ",";
 
-        targetValue = targetValue + responseList().at(i);
+        targetValue = targetValue + list.at(i).trimmed();
     }
 
     m_settings.setValue(targetSetting, targetValue);

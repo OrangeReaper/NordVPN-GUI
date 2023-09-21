@@ -55,10 +55,11 @@ void QNordVPNClient::go(){
     m_vpnProcess->start(program, arguments);
     emit statusChanged();
 
-    //check status every 5 seconds
+    //check status every 60 seconds
     m_statusTimer = new QTimer(this);
     connect(m_statusTimer, SIGNAL(timeout()), this, SLOT(getStatus()));
-    m_statusTimer->start(5000);
+    m_statusTimer->start(60000);
+    getStatus();
 }
 void QNordVPNClient::serviceTasks(){
     if (m_runningTasks < 0) m_runningTasks = 0;
@@ -70,9 +71,8 @@ void QNordVPNClient::runtask(){
     if (m_vpnProcess){
         if (vpnCommand != 0){
             m_runningTasks++;
-            connect(vpnCommand->callback(), SIGNAL(callback(QString)), this, SLOT(nextTask()));
-            connect(vpnCommand, SIGNAL(failed(QString)), this, SLOT(fatalError(QString)));
-            vpnCommand->execute(m_vpnProcess);
+            connect(vpnCommand, SIGNAL(destroyed()), this, SLOT(nextTask()));
+            vpnCommand->sendCommand();
         }
     } else {
         m_taskQueue->clear();
@@ -97,6 +97,7 @@ void QNordVPNClient::validateInstallation(QCallback *callback){
 // account
 void QNordVPNClient::accountInfo(QCallback *callback){
     QVPNCommand *vpnCommand = new QAnyCommand(callback, "nordvpn account", 5000, this);
+    vpnCommand->setLogging(false);
     connect(callback, SIGNAL(callback(QString)), this, SLOT(setAccountExpiry(QString)));
     m_taskQueue->enqueue(vpnCommand);
 }

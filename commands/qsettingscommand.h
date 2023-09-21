@@ -11,8 +11,9 @@ class QSettingsCommand : public QVPNCommand
     Q_OBJECT
 public:
     explicit QSettingsCommand(QCallback *callback, QObject *parent = nullptr);
-    virtual void execute (QProcess *vpnProcess);
     virtual void handleResponse();
+
+    QStringList responseList() { return m_responseList; }
 
 signals:
     void    updateTechnology(QString technology);
@@ -27,7 +28,7 @@ signals:
     void    updateDNS(QString dns);
 private:
     void installWhitelist();
-    void addWhitelistSetting(int from, int to);
+    void addWhitelistSetting(QStringList &list, int from, int to);
 
     static const int s_whitelists;
 
@@ -35,6 +36,8 @@ private:
     QSettingsResult parseBool(QString str);
 
     QSettings m_settings;
+
+    QStringList m_responseList;
 };
 
 

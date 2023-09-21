@@ -8,7 +8,6 @@ class QAnyCommand : public QVPNCommand
     Q_OBJECT
 public:
     explicit QAnyCommand(QCallback *callback, QString command, int msTimeout, QObject *parent = nullptr);
-    virtual void execute (QProcess *vpnProcess);
 signals:
 
 private:

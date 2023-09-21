@@ -8,9 +8,8 @@ class QLoginCommand : public QVPNCommand
     Q_OBJECT
 public:
     explicit QLoginCommand(QCallback *callback, QObject *parent = nullptr);
-    virtual void execute (QProcess *vpnProcess);
     virtual void handleResponse();
-
+    virtual void sendCommand();
 };
 
 #endif // QLOGINCOMMAND_H

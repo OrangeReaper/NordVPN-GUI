@@ -94,7 +94,9 @@ Load the project and compile
 
 deb file is included and this should be installable on Ubuntu/Debian based using the command:
 
-`dpkg -i nordvpn-gui_0.112.0-1.deb`   
+`dpkg -i nordvpn-gui_x.y.z-n.deb`   
+
+where x.y.z-n is the version number of the provided .deb file
 
 # Licence
 

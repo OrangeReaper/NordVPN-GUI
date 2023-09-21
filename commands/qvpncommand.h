@@ -12,13 +12,18 @@ class QVPNCommand : public QObject
 {
     Q_OBJECT
 public:
-    explicit QVPNCommand(QCallback *callback, QObject *parent = nullptr);
+    explicit QVPNCommand(QString command, int timeout, QCallback *callback, QObject *parent = nullptr);
     ~QVPNCommand();
     virtual void handleTimeout();
     virtual void handleResponse();
-    virtual void execute (QProcess *vpnProcess);
-    void sendCommand(QProcess *vpnProcess, QString command, int timeout);
-    void cancelTimeout();
+    virtual void sendCommand();
+
+    QString command() { return m_command; }
+    int timeout() { return m_timeout; }
+
+    void setCommand(QString command) { m_command=command;}
+    void setTimeout( int msTimeout) {m_timeout=msTimeout;}
+
     void commandSucceeded();
     void commandFailed();
 
@@ -27,14 +32,11 @@ public:
     void removeLeadingSpurii(QString &str);
     QString parseResponse(QString find, QString response);
 
-    QString commandComplete() {return c_commandComplete;}
     QString response() {return m_response;}
-    QStringList responseList() {return m_responseList;}
 
     QCallback *callback() {return m_callback;}
 public slots:
-    void timedOut();
-    void getResponse();
+
 signals:
     void log(QString str, QString color);
     void success();
@@ -46,18 +48,19 @@ private:
     void finished();
     bool m_logging=true;
 
+    QString m_command;
+    int m_timeout;
     QString m_lastCommand;
 
     QTimer * m_timer;
     QString m_response="";
-    QStringList m_responseList;
     QProcess *m_vpnProcess;
     QCallback *m_callback=0;
 
     // Constants
-    const QString c_commandComplete="@Done@";
     const QString c_commandColor="#ffffff"; // White
     const QString c_responseColor="#ffff33"; // Yellow
+    const QString c_errorColor="#ff0000"; // Red
 };
 
 #endif // QVPNCOMMAND_H

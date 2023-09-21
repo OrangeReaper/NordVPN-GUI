@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QHBoxLayout>
 
-const QString MainWindow::s_version = QString("v0.113.1");
+const QString MainWindow::s_version = QString("v0.114.1");
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -53,6 +53,7 @@ MainWindow::MainWindow(QWidget *parent)
     //*
     //Initialise Control Panel
     m_controlPanel = new ControlPanel(this);
+    connect(m_logger, SIGNAL(log(QString, QString)), m_controlPanel->overlay(), SLOT(logSomething(QString, QString)));
     connect(m_nordVPNClient, SIGNAL(updateActualCountry(QString&)), m_controlPanel, SLOT(setActualCountry(QString&)));
     connect(m_nordVPNClient, SIGNAL(updateActualIPAddress(QString&)), m_controlPanel, SLOT(setActualIP(QString&)));
     connect(m_nordVPNClient, SIGNAL(updateActualTechnology(QString&)), m_controlPanel, SLOT(setActualTechnology(QString&)));
@@ -76,6 +77,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(m_nordVPNClient, SIGNAL(updateIPv6(bool)), m_controlPanel, SLOT(setIPv6(bool)));
     connect(m_nordVPNClient, SIGNAL(updateDNS(QString)), m_controlPanel, SLOT(setDNS(QString)));
     connect(m_nordVPNClient, SIGNAL(updateWhitelists()), m_controlPanel, SLOT(setWhitelists()));
+
+    m_controlPanel->connectionTypeChanged();
 
     //*
     //Add Actions to Main Window
@@ -108,7 +111,7 @@ MainWindow::MainWindow(QWidget *parent)
         //m_controlPanel->restoreGeometry(settings.value("controlPanelGeometry").toByteArray());
     }
 
-    connect(m_logger, SIGNAL(log(QString, QString)), m_controlPanel->overlay(), SLOT(logSomething(QString, QString)));
+
 }
 
 MainWindow::~MainWindow()
@@ -130,12 +133,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
         this->move(newpos);
     }
 }
-//void MainWindow::enable(){
-//    m_nordVPNClient->connectToVPN(new QCallback(this));
-//}
-//void MainWindow::disable(){
-//    m_nordVPNClient->disconnectFromVPN(new QCallback(this));
-//}
+
 void MainWindow::controlPanel(){
     m_controlPanel->show();
 }

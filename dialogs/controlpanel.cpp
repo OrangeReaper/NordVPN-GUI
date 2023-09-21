@@ -50,7 +50,7 @@ ControlPanel::ControlPanel(QWidget *parent) :
 
 
     ui->connectionType->setCurrentIndex(ui->connectionType->findText(m_settings.value("connectionType").toString()));
-    connectionTypeChanged();
+//    connectionTypeChanged();
     ui->connectionType->blockSignals(false);
 
     //*
@@ -294,6 +294,13 @@ void ControlPanel::setActualTechnology(QString &actualTechnology){
 }
 void ControlPanel::setActualProtocol(QString &actualProtocol){
     ui->actualProtocol->setText(actualProtocol);
+    if (actualProtocol == "UDP"){
+       m_protocolControl->sliderSwitch()->setValue(true);
+       m_protocolControl->sliderSwitch()->setOnText(actualProtocol);
+    } else {
+       m_protocolControl->sliderSwitch()->setValue(false);
+       m_protocolControl->sliderSwitch()->setOffText(actualProtocol);
+    }
 }
 void ControlPanel::setCountries(QStringList &countries){
     populateConnectionList(countries, m_settings.value("country").toString());

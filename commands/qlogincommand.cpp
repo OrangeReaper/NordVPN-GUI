@@ -1,11 +1,11 @@
 #include "qlogincommand.h"
 #include <QSettings>
 
-QLoginCommand::QLoginCommand(QCallback *callback, QObject *parent) : QVPNCommand(callback, parent)
+QLoginCommand::QLoginCommand(QCallback *callback, QObject *parent) : QVPNCommand("dummy", 10000, callback, parent)
 {
 
 }
-void QLoginCommand::execute(QProcess *vpnProcess){
+void QLoginCommand::sendCommand(){
     QSettings settings;
 /*    QString command = "nordvpn login --legacy --username "
                 + settings.value("username").toString()
@@ -15,7 +15,8 @@ void QLoginCommand::execute(QProcess *vpnProcess){
 
     QString command = "nordvpn login --token "
             + settings.value("password").toString();
-    sendCommand(vpnProcess, command, 10000);
+    setCommand(command);
+    QVPNCommand::sendCommand();
 }
 void QLoginCommand::handleResponse(){
     // Here when response arrives after login request

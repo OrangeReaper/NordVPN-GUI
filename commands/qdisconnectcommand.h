@@ -8,7 +8,6 @@ class QDisconnectCommand : public QVPNCommand
     Q_OBJECT
 public:
     explicit QDisconnectCommand(QCallback *callback, QObject *parent = nullptr);
-    virtual void execute (QProcess *vpnProcess);
     virtual void handleResponse();
 signals:
 

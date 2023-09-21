@@ -4,11 +4,11 @@
 #include "dialogs/controlpanel.h"
 #include "classes/staticfunctions.h"
 
-QConnectCommand::QConnectCommand(QCallback *callback, QObject *parent) : QVPNCommand(callback, parent)
+QConnectCommand::QConnectCommand(QCallback *callback, QObject *parent) : QVPNCommand("connect", 20000, callback, parent)
 {
 
 }
-void QConnectCommand::execute(QProcess *vpnProcess){
+void QConnectCommand::sendCommand(){
     QSettings settings;
 
     QString connectionType = settings.value("connectionType").toString();
@@ -35,8 +35,8 @@ void QConnectCommand::execute(QProcess *vpnProcess){
             break;
 
 }
-
-    sendCommand(vpnProcess, command, 20000);
+    setCommand(command);
+    QVPNCommand::sendCommand();
 }
 void QConnectCommand::handleResponse(){
     // Here when response arrives after connect request

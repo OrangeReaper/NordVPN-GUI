@@ -1,12 +1,8 @@
 #include "qstatuscommand.h"
 
-QStatusCommand::QStatusCommand(QCallback *callback, QObject *parent) : QVPNCommand(callback, parent)
+QStatusCommand::QStatusCommand(QCallback *callback, QObject *parent) : QVPNCommand("nordvpn status", 5000, callback, parent)
 {
     setLogging(false);
-}
-void QStatusCommand::execute(QProcess *vpnProcess){
-    QString command = "nordvpn status";
-    sendCommand(vpnProcess, command, 5000);
 }
 /*
  * RESPONSE IF CONNECTED

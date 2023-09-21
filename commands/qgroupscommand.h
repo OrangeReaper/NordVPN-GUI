@@ -10,7 +10,6 @@ class QGroupsCommand : public QVPNCommand
     Q_OBJECT
 public:
     explicit QGroupsCommand(QCallback *callback, QObject *parent = nullptr);
-    virtual void execute (QProcess *vpnProcess);
     virtual void handleResponse();
 signals:
     void groupsUpdated(QStringList countries);

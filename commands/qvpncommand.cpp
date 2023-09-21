@@ -4,58 +4,51 @@
 
 #include "classes/staticfunctions.h"
 
-QVPNCommand::QVPNCommand(QCallback *callback, QObject *parent) : QObject(parent){
+QVPNCommand::QVPNCommand(QString command, int timeout, QCallback *callback, QObject *parent) : QObject(parent){
     m_callback=callback;
+    m_command=command;
+    m_timeout=timeout;
 }
 QVPNCommand::~QVPNCommand(){
-    //qDebug() << "QVPNCommand Destroyed";
+    //qDebug() << "QVPNCommand Destroyed: " + m_command;
 }
 void QVPNCommand::handleResponse(){
-//    if (m_response.contains(c_commandComplete)) {
-//        finished();
-//    }
-    // MUST BE SUBCLASSED
-}
-void QVPNCommand::execute (QProcess *vpnProcess){
+    finished();
 }
 void QVPNCommand::handleTimeout(){
     commandFailed();
 }
-void QVPNCommand::sendCommand(QProcess *vpnProcess, QString command, int timeout){
+void QVPNCommand::sendCommand(){
     connect(this, SIGNAL(log(QString,QString)), QLogger::getInstance(), SLOT(logSomething(QString,QString)));
-    m_timer=new QTimer(this);
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(timedOut()));
-
-    m_vpnProcess=vpnProcess;
-    connect(vpnProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(getResponse()));
 
     // Prepare command
-    QString str = "C: " + command;
+    QString str = "C: " + m_command;
     logSomething(str, c_commandColor);
     m_lastCommand = str;
-    command = command + "; echo " + c_commandComplete + " \n";
-    QByteArray byteArray = QByteArray::fromStdString(command.toStdString());
 
-    // Send command and start timeout
-    vpnProcess->write(byteArray);
-    m_timer->start(timeout);
-}
-void QVPNCommand::timedOut(){
-    //cancelTimeout();
-    handleTimeout();
-    finished();
-    //this->deleteLater();
-}
-void QVPNCommand::cancelTimeout(){
-    m_timer->stop();
-}
-void QVPNCommand::getResponse(){
-    m_response = m_response + m_vpnProcess->readAllStandardOutput();
-    if (m_response.contains(c_commandComplete)) {
-        finished();
+    QProcess * pnProcess = new QProcess();
+    pnProcess->start("/bin/sh", QStringList() << "-c" << m_command);
+    if (!pnProcess->waitForFinished(m_timeout)){
+        //Process timed out
+        QString errorMessage="E:" + m_lastCommand + ": timed out";
+        logSomething(errorMessage, c_errorColor);
+    } else {
+        // process finished
+        m_response = pnProcess->readAllStandardOutput();
+
+        if (pnProcess->exitStatus() != 0) {
+            // The process failed.
+            QString errorMessage = pnProcess->errorString();
+            errorMessage="E:" + m_lastCommand + ": failed\n" + "E:" + errorMessage;
+            logSomething(errorMessage, c_errorColor);
+        }
     }
-    //handleResponse();
+
+    pnProcess->deleteLater();
+    handleResponse();
+
 }
+
 void QVPNCommand::commandSucceeded(){    
     emit success();
 }
@@ -63,43 +56,24 @@ void QVPNCommand::commandFailed(){
     emit failed("Last " + m_lastCommand);
 }
 void QVPNCommand::finished(){
-    cancelTimeout();
-    //removeSpurii(m_response);
-
-    if (m_response.length() > 0 ) {
-
-        QStringList tempList = m_response.split("\n", Qt::SkipEmptyParts, Qt::CaseInsensitive);;
-        m_responseList.clear();
-
-        for (QString& string : tempList){
-            removeSpurii(string);
-            removeLeadingSpurii(string);
-            if (string.length() > 0){
-                QString str = "R: " + string;
-                logSomething(str, c_responseColor);
-                m_responseList.append(string);
-            }
-        }
+    if (response().length() > 0){
+        QString str = "R: " + response();
+        logSomething(str, c_responseColor);
     }
-    handleResponse();
-    if (m_responseList.length() == 1){
-        emit m_callback->callback(m_responseList.at(0));
-    } else {
-        m_response.replace(c_commandComplete,"");
-        emit m_callback->callback(m_response);
-    }
+
+    emit m_callback->callback(m_response);
     m_callback->deleteLater();
 
     this->deleteLater();
 }
+
 void QVPNCommand::removeSpurii(QString &response){
-    if (response.contains("New feature"))
-        response = "";
+//    if (response.contains("New feature"))
+//        response = "";
 
     response = response.remove(QRegularExpression("(\\r)")); // /(\\r)+/g
     response.replace("\t","");
     response.replace(":;",";");
-    response.replace(c_commandComplete,"");
     response=response.trimmed();
 }
 void QVPNCommand::removeLeadingSpurii(QString &str){
@@ -124,6 +98,8 @@ QString QVPNCommand::parseResponse(QString find, QString response){
 
 }
 void QVPNCommand::logSomething(QString str, QString color){
+    removeSpurii(str);
+    removeLeadingSpurii(str);
     if (m_logging) {
         emit log(str, color);
         staticFunctions::delay(1);
